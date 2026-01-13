@@ -63,7 +63,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       Container(
                         width: 218,
                         height: 218,
-                        
                         child: Padding(
                           padding: const EdgeInsets.all(24),
                           child: Image.asset(page.image),

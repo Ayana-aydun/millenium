@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
+import 'package:millenium/home.dart';
+
 
 // Главка 
 class AuthMainScreen extends StatefulWidget {
@@ -425,7 +427,7 @@ class _LoginTabState extends State<LoginTab> {
               width: double.infinity,
               height: 52,
               child: ElevatedButton(
-                onPressed: _isFormValid ? () {} : null,
+                onPressed: _isFormValid ? () {} : ()=> Navigator.push(context, MaterialPageRoute(builder:(context)=> const Home())),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFFF4444),
                   disabledBackgroundColor: Colors.red[300],
@@ -627,7 +629,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                     width: double.infinity,
                     height: 52,
                     child: ElevatedButton(
-                      onPressed: null,
+                      onPressed:()=> Navigator.push(context, MaterialPageRoute(builder:(context)=> const Home())),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFFFF4444),
                         shape: RoundedRectangleBorder(
