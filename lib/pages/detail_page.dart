@@ -231,7 +231,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           color: Colors.white,
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.2),
+              color: const Color.fromARGB(255, 146, 43, 43).withOpacity(0.2),
               spreadRadius: 1,
               blurRadius: 10,
               offset: const Offset(0, -3),
@@ -241,41 +241,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         child: SafeArea(
           child: Row(
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey[300]!),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Row(
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.remove),
-                      onPressed: () {
-                        if (quantity > 1) {
-                          setState(() {
-                            quantity--;
-                          });
-                        }
-                      },
-                    ),
-                    Text(
-                      '$quantity',
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.add),
-                      onPressed: () {
-                        setState(() {
-                          quantity++;
-                        });
-                      },
-                    ),
-                  ],
-                ),
-              ),
+              
               const SizedBox(width: 12),
               Expanded(
                 child: ElevatedButton(
@@ -295,7 +261,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     ),
                   ),
                   child: Text(
-                    '$quantity x ${widget.product.price.toInt()} ₸',
+                    'В корзину',
+                    // '$quantity x ${widget.product.price.toInt()} ₸',
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
