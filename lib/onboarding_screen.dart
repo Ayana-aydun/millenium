@@ -60,7 +60,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
+                      SizedBox(
                         width: 218,
                         height: 218,
                         child: Padding(

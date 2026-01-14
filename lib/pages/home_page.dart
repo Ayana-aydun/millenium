@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:millenium/pages/detail_page.dart';
+import 'package:millenium/pages/product.dart';
 import 'package:millenium/theme/colors.dart';
 
 class HomePage extends StatefulWidget {
@@ -18,18 +20,21 @@ class _HomePageState extends State<HomePage> {
   
   final List<_tDetails> _pop_pages = [
     _tDetails(
+      id: '1',
       image: 'assets/images/t1.png',
       title: 'Фармгрупп ООО МАГНИЙ В6-ФОРТ...',
       price: '800',
       discount: '10% Б'
     ),
     _tDetails(
+      id: '2',
       image: 'assets/images/t2.png',
       title: 'BOTO Granat collagen 15 стиков ..',
       price: '3500',
       discount: null
     ),
     _tDetails(
+      id: '3',
       image: 'assets/images/t3.png',
       title: 'Сорбифер Дурулес таблетки 100 мг 50 шт',
       price: '2600',
@@ -37,7 +42,8 @@ class _HomePageState extends State<HomePage> {
     ),
   ];
   final List<_tDetails> _saleProducts=[
-        _tDetails(
+      _tDetails(
+      id: '4',
       image: 'assets/images/t4.png',
       title: 'Энтерожермина Форте суспензия 4 млдрд/5 мл 10 шт',
       price: '4000',
@@ -45,6 +51,7 @@ class _HomePageState extends State<HomePage> {
       lastPrice:'5050'
     ),
     _tDetails(
+      id: '5',
       image: 'assets/images/t5.png',
       title: 'Антисептик Akmasept спрей Aloe Vera 50 мл',
       price: '300',
@@ -52,6 +59,7 @@ class _HomePageState extends State<HomePage> {
       lastPrice:'505'
     ),
     _tDetails(
+      id: '6',
       image: 'assets/images/t6.png',
       title: 'Медицинские перчатки SIgma+ винил 100 шт черный M',
       price: '600',
@@ -59,6 +67,7 @@ class _HomePageState extends State<HomePage> {
       lastPrice:'700'
     ),
     _tDetails(
+      id: '7',
       image: 'assets/images/t7.png',
       title: 'Цитрамон П таблетки 240 мг 10 шт',
       price: '135',
@@ -74,6 +83,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    ProductData.initializeAnalogs(); 
     _pageController = PageController();
     _autoScrollTimer = Timer.periodic(Duration(seconds: 2), (timer) {
       if (_currentIndex < _banners.length - 1) {
@@ -124,7 +134,20 @@ class _HomePageState extends State<HomePage> {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
-            child: Image.asset("assets/images/Frame.png", width: 24),
+            child: InkWell(
+              onTap: () {
+                showContactBottomSheet(context);
+              },
+              borderRadius: BorderRadius.circular(12), // Если хотите закругленные углы
+              child: Padding(
+                padding: const EdgeInsets.all(4.0), // Добавляет область для нажатия вокруг иконки
+                child: Image.asset(
+                  "assets/images/Frame.png", 
+                  width: 24,
+                ),
+              ),
+            )
+
           )
         ],
       ),
@@ -158,7 +181,6 @@ class _HomePageState extends State<HomePage> {
                       },
                     ),
                   ),
-                  // Индикаторы точек
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 12.0),
                     child: Row(
@@ -212,10 +234,22 @@ class _HomePageState extends State<HomePage> {
                         itemCount: _pop_pages.length,
                         itemBuilder: (context, index) {
                           final product = _pop_pages[index];
-                          return Container(
-                            color: Colors.white,
-                            width: 140,
-                            margin: EdgeInsets.only(right: 12),
+                          return GestureDetector(  // ← ДОБАВИЛИ GestureDetector
+                            onTap: () {
+                              final detailProduct = ProductData.getProductById(product.id);
+                              if (detailProduct != null) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ProductDetailPage(product: detailProduct),
+                                  ),
+                                );
+                              }
+                            },
+                            child: Container(  // ← Container стал child
+                              color: Colors.white,
+                              width: 140,
+                              margin: EdgeInsets.only(right: 12),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -271,7 +305,6 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 ),
                                 SizedBox(height: 8),
-                                // Описание
                                 Text(
                                   product.title,
                                   style: TextStyle(
@@ -282,7 +315,6 @@ class _HomePageState extends State<HomePage> {
                                   overflow: TextOverflow.ellipsis,
                                 ),
                                 Spacer(),
-                                // Цена и кнопка добавления
                                 Container(
                                   height: 42,
                                   width: 98,
@@ -308,7 +340,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 ),
                               ],
-                            ),
+                            ),),
                           );
                         },
                       ),
@@ -348,14 +380,25 @@ class _HomePageState extends State<HomePage> {
                         itemCount: _saleProducts.length,
                         itemBuilder: (context, index) {
                           final product = _saleProducts[index];
-                          return Container(
-                            color: Colors.white,
-                            width: 140,
-                            margin: EdgeInsets.only(right: 12),
+                          return GestureDetector( 
+                            onTap: () {
+                              final detailProduct = ProductData.getProductById(product.id);
+                              if (detailProduct != null) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ProductDetailPage(product: detailProduct),
+                                  ),
+                                );
+                              }
+                            },
+                            child: Container( 
+                              color: Colors.white,
+                              width: 140,
+                              margin: EdgeInsets.only(right: 12),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                // Изображение товара
                                 Container(
                                   height: 140,
                                   decoration: BoxDecoration(
@@ -430,12 +473,10 @@ class _HomePageState extends State<HomePage> {
                                       crossAxisAlignment: CrossAxisAlignment.end,
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        // Колонка с ценами (вертикально)
                                         Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           mainAxisAlignment: MainAxisAlignment.end,
                                           children: [
-                                            // Старая цена сверху
                                             Text(
                                               '${product.lastPrice} ₸',
                                               style: TextStyle(
@@ -444,7 +485,6 @@ class _HomePageState extends State<HomePage> {
                                                 fontSize: 12,
                                               ),
                                             ),
-                                            // Текущая цена снизу
                                             Text(
                                               '${product.price} ₸',
                                               style: TextStyle(
@@ -455,7 +495,6 @@ class _HomePageState extends State<HomePage> {
                                           ],
                                         ),
                                         
-                                        // Иконка справа
                                         Center(child: 
                                         Icon(
                                           Icons.add,
@@ -470,7 +509,7 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ),
                                     ],
-                                ),
+                                ),),
                                 );
                         },
                                 ),
@@ -479,11 +518,115 @@ class _HomePageState extends State<HomePage> {
                             ),
               ),),],),),
                           );
-                        }
+  }
 
+void showContactBottomSheet(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true, 
+    backgroundColor: Colors.transparent, 
+    builder: (BuildContext context) {
+      return Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        child: Container(
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+          ),
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Center(
+                child: Container(
+                  width: 40,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 24),
+              
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: AppColors.cntColor,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  children: [
+                    // Текст слева
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Есть вопрос или жалоба?',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF1F2937),
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            'Расскажите нам — мы готовы \nвыслушать!',
+                            style: TextStyle(
+                              color: Colors.grey[600],
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    const Image(
+                      image: AssetImage('assets/images/phone.png'),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
+              
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFEF4444), 
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  'Позвонить',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              
+              SizedBox(height: MediaQuery.of(context).padding.bottom > 0 ? 8 : 16),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}
 }
 
 class _tDetails {
+  final String id;
   final String image;
   final String title;
   final String? lastPrice;
@@ -491,6 +634,7 @@ class _tDetails {
   final String? discount;
 
   _tDetails({
+    required this.id,
     required this.image,
     required this.title,
     this.lastPrice,

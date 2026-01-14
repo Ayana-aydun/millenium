@@ -411,7 +411,7 @@ class _LoginTabState extends State<LoginTab> {
                         },
                         child: const Text('Я забыл мой пароль',
                         style: TextStyle(
-                          color: const Color(0xFFFF4444),
+                          color:  Color(0xFFFF4444),
                           fontSize: 13,)
                         ),
                       ),

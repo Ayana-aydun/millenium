@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:millenium/pages/cards.dart';
 import 'package:millenium/theme/colors.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -88,6 +89,7 @@ class ProfilePage extends StatelessWidget {
                       leading: Icon(Icons.payment,color: Colors.red,),
                       title: Text('Сохраненные карты '),
                       trailing: Text('2'),
+                      onTap: () => Navigator.push(context, MaterialPageRoute(builder:(context)=> const Cards())),
                     ),
                     ListTile(
                       leading: Icon(Icons.logout,color: Colors.red,),
